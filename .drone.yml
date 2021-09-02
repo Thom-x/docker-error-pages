@@ -23,7 +23,7 @@ steps:
     repo: modem7/traefik-error-pages
     compress: true
     purge: true
-    cache_from: "modem7/traefik-error-pages:latest"
+    cache_from: "modem7/traefik-error-pages:test"
     platforms: # if it doesn't work run docker run --privileged --rm tonistiigi/binfmt --install all
       - linux/amd64
       - linux/arm/v6
@@ -34,8 +34,7 @@ steps:
     password:
       from_secret: docker_password
     tags: 
-      - latest
-      - 1.0.0
+      - test
 
 - name: slack
   image: themaz/drone-slack
@@ -45,8 +44,6 @@ steps:
   when:
     status: [ success, failure ]
 
-# trigger:
-  # event:
-    # - cron
-  # cron:
-    # - errorpages_latest
+trigger:
+  event:
+    - custom
